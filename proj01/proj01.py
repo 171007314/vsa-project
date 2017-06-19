@@ -6,19 +6,34 @@
 # Then, it prints a sentence that says when the user will turn 100.
 
 # If you complete extensions, describe your extensions here!
-User_Name = raw_input("What is your name?")
+# I added the hundred years old feature, the movie feature, and the capital letter extension
+User_Name = raw_input("Whsat is your name?")
+z = "You will be one hundred years old in"
+a = "You turned 100 in"
+year = 2017
 firstletter = User_Name[0]
 capitalfirst = firstletter.upper()
 otherpart = User_Name[1:].lower()
 print "Your name is",capitalfirst + otherpart
 User_Age = int(raw_input("What is your age"))
-x = (100 - User_Age) + 2017
+x = (100 - User_Age) + year
 User_Birth = raw_input("Have you had your birthday this year?")
 y = x
 if (User_Birth == "no"): y = x - 1
-print "You will be one hundred years old in",y
-if (User_Age < 8): print "You can see G movies"
-if (User_Age <=12): print "You can see G and PG movies"
-if (User_Age >12): print "You can see G, PG, and PG-13 movies"
-if (User_Age >= 17): print "You can see R movies"
+if User_Age == 100 and User_Birth == "yes":
+    z = a
+if User_Age == 100 and User_Birth == "no":
+    z = a
+if User_Age > 100: z = a
+print z,y
+if (User_Age <=12):
+    parent = raw_input("Do you have a parent with you?")
+    if parent == "yes":
+        print"You can see G and PG-13 movies"
+    elif parent == "no":
+        print"You can see G movies"
+elif (User_Age <=16):
+    print "You can see G, PG, and PG-13 movies"
+else:
+    print "You can see G, PG, PG-13, and R movies"
 
