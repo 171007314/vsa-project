@@ -1,11 +1,20 @@
-# Name:
-# Date:
+# Name: Kayden
+# Date: 6/20/17
 
 # proj05: functions and lists
 
 # Part I
 
 def divisors(num):
+    n = int(raw_input("Pick a whole number greater than one: "))
+    count = [i for i in range(1, n + 1) if n % i == 0]
+    prime = len(count)
+    if prime != 2:
+        print "This number is not prime"
+        print "The factors of this number are", count
+    if prime == 2:
+        print "This number is prime"
+        print "The factors of this number are", count
     """
     Takes a number and returns all divisors of the number, ordered least to greatest
     :param num: int
@@ -24,6 +33,7 @@ def prime(num):
 # Part II
 
 def intersection(lst1, lst2):
+    print list(set([random.randrange(1, 45) for _ in range(0, random.randint(5, 45))]) & set([random.randrange(1, 45) for _ in range(0, random.randint(5, 45))]))
     """
     Takes two lists and returns a list of the elements in common between the lists
     :param lst1: list, any type
@@ -73,6 +83,28 @@ def pythagorean(a,b,c):
     return False
 
 def is_right(side1, side2, side3):
+    def rightTriangles():
+        side1 = int(raw_input("What is the length of the first side of the the triangle? "))
+        side2 = int(raw_input("What is the length of the second side of the the triangle? "))
+        side3 = int(raw_input("What is the length of the third side of the the triangle? "))
+        a = 1
+        b = 1
+        c = 1
+        if side1 * side1 == (side2 * side2) + (side3 * side3):
+            print "This triangle is a right triangle"
+        if side2 * side2 == (side1 * side1) + (side3 * side3):
+            print "This triangle is a right triangle"
+        if side3 * side3 == (side2 * side2) + (side1 * side1):
+            print "This triangle is a right triangle"
+        else:
+            print "This triangle is not a right triangle"
+        replay = raw_input("Would you like to try another triangle? ")
+        if replay == "yes":
+            rightTriangles()
+        if replay == "no":
+            print "This machine hates you"
+
+    rightTriangles()
     """
     Takes three side lengths and returns true if triangle is right
     :param side1: int or float
