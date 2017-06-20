@@ -45,4 +45,10 @@ def choose_word(wordlist):
 # in the program
 wordlist = load_words()
 
+
 # your code begins here!
+x = random.choice(wordlist)
+comp = []
+for letter in x:
+    comp.append(letter)
+print "I am thinking of a " +str(len(comp)), "letter word"
