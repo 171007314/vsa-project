@@ -48,7 +48,43 @@ wordlist = load_words()
 
 # your code begins here!
 x = random.choice(wordlist)
-comp = []
+
+comp_word = []
 for letter in x:
-    comp.append(letter)
-print "I am thinking of a " +str(len(comp)), "letter word"
+    comp_word.append(letter)
+print "I am thinking of a " +str(len(comp_word)), "letter word"
+print comp_word
+def main():
+    life = 8
+    a = len(x) * "_"
+    print a
+    guesses_made = []
+    while life > 0:
+        user_guess = raw_input("Guess a letter: ")
+        for o in user_guess:
+            guesses_made.append(o)
+        print "You have guessed these letters",guesses_made
+        intersection = [el for el in comp_word if el in user_guess]
+        if intersection == []:
+            print "Incorrect Guess"
+            life = life - 1
+            print "You lost a life. Lives = ",life
+        if intersection != []:
+            print "Good Guess"
+            a.replace("_", "user_guess")
+        if life == 0:
+            print "Game Over"
+            print "The word was",x
+            quit()
+
+        set2 = set(guesses_made)
+        answer = [el for el in comp_word if el in set2]
+        print answer
+        if answer == comp_word:
+            print "You win"
+            quit()
+main()
+main()
+
+
+
