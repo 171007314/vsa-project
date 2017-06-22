@@ -1,7 +1,9 @@
+
 # Name:
 # Date:
 
 # proj07: Word Game
+
 
 import random
 import string
@@ -9,7 +11,9 @@ import string
 VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
-
+n = 7
+hand = {}
+word = raw_input("Enter a word ")
 SCRABBLE_LETTER_VALUES = {
     'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k':
         5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u':
@@ -25,7 +29,6 @@ WORDLIST_FILENAME = "words.txt"
 def load_words():
     """
     Returns a list of valid words. Words are strings of lowercase letters.
-    
     Depending on the size of the word list, this function may
     take a while to finish.
     """
@@ -38,13 +41,17 @@ def load_words():
         wordlist.append(line.strip().lower())
     print "  ", len(wordlist), "words loaded."
     return wordlist
+print wordlist
+
+load_words()
+
+
 
 def get_frequency_dict(sequence):
     """
     Returns a dictionary where the keys are elements of the sequence
     and the values are integer counts, for the number of times that
     an element is repeated in the sequence.
-
     sequence: string or list
     return: dictionary
     """
@@ -53,34 +60,29 @@ def get_frequency_dict(sequence):
     for x in sequence:
         freq[x] = freq.get(x,0) + 1
     return freq
-	
-
 # (end of helper code)
 # -----------------------------------
 
-#
-# Problem #1: Scoring a word
-#
+
+
 def get_word_score(word, n):
-    """
-    Returns the score for a word. Assumes the word is a
-    valid word.
+    #User_Word_Choice = raw_input("Type a word: ")
+    x = (word)
+    player_word = []
+    for letter in x:
+        player_word.append(letter)
+    print player_word
+    for i in range(0, len(player_word)):
+        player_word[i] = SCRABBLE_LETTER_VALUES.get(player_word[i], 0)
+    if len(word) != n:
+        score = sum(player_word) * len(word)
+    elif len(word) == n:
+        score = (sum(player_word) * len(word)) + 50
+    print score
+    return score
 
-	The score for a word is the sum of the points for letters
-	in the word multiplied by the length of the word, plus 50
-	points if all n letters are used on the first go.
 
-	Letters are scored as in Scrabble; A is worth 1, B is
-	worth 3, C is worth 3, D is worth 2, E is worth 1, and so on.
 
-    word: string (lowercase letters)
-    returns: int >= 0
-    """
-    # TO DO...
-    
-#
-# Make sure you understand how this function works and what it does!
-#
 def display_hand(hand):
     """
     Displays the letters currently in the hand.
@@ -123,7 +125,7 @@ def deal_hand(n):
     for i in range(num_vowels, n):    
         x = CONSONANTS[random.randrange(0,len(CONSONANTS))]
         hand[x] = hand.get(x, 0) + 1
-        
+    print hand
     return hand
 
 #
@@ -150,7 +152,16 @@ def update_hand(hand, word):
 #
 # Problem #3: Test word validity
 #
+
+hand = deal_hand(n)
+
 def is_valid_word(word, hand, word_list):
+    player_word = raw_input("Enter a word using the tiles in your hand")
+    x = []
+    for letter in player_word:
+        x.append(letter)
+    print x
+    return x
     """
     Returns True if word is in the word_list and is entirely
     composed of letters in the hand. Otherwise, returns False.
@@ -161,6 +172,9 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     """
     # TO DO...
+
+is_valid_word(word, hand, word_list)
+
 
 def calculate_handlen(hand):
     handlen = 0
@@ -205,26 +219,25 @@ def play_hand(hand, word_list):
 # Problem #5: Playing a game
 # Make sure you understand how this code works!
 # 
-def play_game(word_list):
-    """
-    Allow the user to play an arbitrary number of hands.
+def play_game():
+        again = raw_input("Would you like to play again? Enter n for a new random hand, enter r to replay the previous hand, enter e to exit the game. ")
+        if again == 'n':
+            print "Ok"
+            deal_hand(n)
+        if again == "r":
+            print "Ok"
+            deal_hand(n)
+        if again == 'e':
+            print "Bye"
 
-    * Asks the user to input 'n' or 'r' or 'e'.
-
-    * If the user inputs 'n', let the user play a new (random) hand.
-      When done playing the hand, ask the 'n' or 'e' question again.
-
-    * If the user inputs 'r', let the user play the last hand again.
-
-    * If the user inputs 'e', exit the game.
-
-    * If the user inputs anything else, ask them again.
-    """
     # TO DO...
 
 #
 # Build data structures used for entire session and play game
 #
+
 if __name__ == '__main__':
     word_list = load_words()
-    play_game(word_list)
+    #play_game(word_list)
+deal_hand(n)
+is_valid_word(word, hand, word_list)
