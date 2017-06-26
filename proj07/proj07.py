@@ -2,15 +2,15 @@
 # Date:
 
 # proj07: Word Game
-
+count1 = 1
 import random
 import string
 from collections import Counter
+from perm import *
 VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
-n = 7
-count1 = 1
+n = int(raw_input("What hand size do you want?(i.e. 7): "))
 SCRABBLE_LETTER_VALUES = {
     'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k':
         5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u':
@@ -59,7 +59,49 @@ def get_frequency_dict(sequence):
 # (end of helper code)
 # -----------------------------------
 
-#
+
+
+
+
+def comp_choose_word(hand):
+    comp_choices = []
+    for i in range(0, n + 1):
+        comp_choices = comp_choices + get_perms(hand, i)
+    #print comp_choices
+    return comp_choices
+
+def comp_valid_word(comp_choices, word_list):
+    comp_best_words = []
+    for o in range(0, len(comp_choices)):
+        #print "K"
+        y = comp_choices[o]
+        if y in word_list:
+            comp_best_words.append(y)
+    comp_best_words1 = list(comp_best_words)
+    return comp_best_words1
+
+def get_comp_word_score(comp_best_words1, HAND_SIZE):
+    comp_scores = []
+    for i in range(0, len(comp_best_words1)):
+
+        x = comp_best_words1[i]
+        print x
+        comp_word = []
+
+        for letter in x:
+            comp_word.append(letter)
+        for i in range(0, len(comp_word)):
+            comp_word[i] = SCRABBLE_LETTER_VALUES.get(comp_word[i], 0)
+        if len(comp_word) == HAND_SIZE:
+            comp_word_score = (sum(comp_word) * len(comp_word)) + 50
+            print comp_word_score
+            comp_scores.append(comp_word_score)
+        elif len(comp_word) != HAND_SIZE:
+            comp_word_score = sum(comp_word) * len(comp_word)
+            print comp_word_score
+            comp_scores.append(comp_word_score)
+    print comp_scores
+
 # Problem #1: Scoring a word
 #
 def get_word_score(word, n):
@@ -239,7 +281,7 @@ def calculate_handlen(hand):
 #
 # Problem #4: Playing a hand
 #
-def play_hand(hand, word_list, hand2):
+def play_hand(hand, word_list, hand2, comp_choices):
     score_total = []
     hand_value = []
     display_hand(hand)
@@ -251,6 +293,11 @@ def play_hand(hand, word_list, hand2):
             print "Finish! Your score is ", sum(score_total)
             hand = hand2.copy()
             play_game(word_list, hand)
+        elif word == '!':
+            print "Calculating..."
+            comp_choices = comp_choose_word(hand)
+            comp_best_words = comp_valid_word(comp_choices, word_list)
+            get_comp_word_score(comp_best_words, HAND_SIZE)
         elif is_valid_word(word, hand, word_list) == False:
             print "That is an invalid word, please enter another one."
             continue
@@ -309,18 +356,19 @@ def hand_copy(hand):
 # Make sure you understand how this code works!
 # 
 def play_game(word_list, hand):
+
     again = raw_input("Would you like to play again? Enter n for a new random hand, enter r to replay the previous hand, enter e to exit the game. ")
     if again == 'n':
         print "Ok"
         hand = deal_hand(n)
         hand2 = hand_copy(hand)
         hand = hand2.copy()
-        play_hand(hand, word_list, hand2)
+        play_hand(hand, word_list, hand2, comp_choices)
     elif again == "r":
         hand2 = hand_copy(hand)
         hand = hand2.copy()
         print "Ok"
-        play_hand(hand, word_list, hand2)
+        play_hand(hand, word_list, hand2, comp_choices)
     elif again == 'e':
         print "OK, bye"
     else:
@@ -329,14 +377,15 @@ def play_game(word_list, hand):
 
 
 
+
+
 if count1 == 1:
-    print "OK"
     count1 = 2
-    hand =deal_hand(n)
+    hand = deal_hand(n)
     word_list = load_words()
     hand2 = hand.copy()
-    play_hand(hand, word_list, hand2)
-
+    comp_choices = []
+    play_hand(hand, word_list, hand2, comp_choices)
 
 
 
