@@ -6,7 +6,6 @@ import string
 import time
 from project_util import translate_html
 from news_gui import Popup
-
 #-----------------------------------------------------------------------
 #
 # proj08: RSS Feed Filter
@@ -37,8 +36,7 @@ def process(url):
         newsStory = NewsStory(guid, title, subject, summary, link)
         ret.append(newsStory)
     return ret
-
-#======================
+#============
 # Part 1
 # Data structure design
 #======================
@@ -46,7 +44,23 @@ def process(url):
 # Problem 1
 
 # TODO: NewsStory
-
+class NewsStory():
+    def __init__(self, guid, title, subject, summary, link):
+        self.guid = guid
+        self.title = title
+        self.subject = subject
+        self.summary = summary
+        self.link = link
+    def get_guid(self):
+        return self.guid
+    def get_title(self):
+        return self.title
+    def get_subject(self):
+        return self.subject
+    def get_summary(self):
+        return self.summary
+    def get_link(self):
+        return self.link
 #======================
 # Part 2
 # Triggers
@@ -54,6 +68,8 @@ def process(url):
 
 class Trigger(object):
     def evaluate(self, story):
+        return true
+        return false
         """
         Returns True if an alert should be generated
         for the given news item, or False otherwise.
