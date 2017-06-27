@@ -66,10 +66,8 @@ class NewsStory():
 # Triggers
 #======================
 
-class Trigger(object):
+class Trigger:
     def evaluate(self, story):
-        return true
-        return false
         """
         Returns True if an alert should be generated
         for the given news item, or False otherwise.
@@ -80,8 +78,29 @@ class Trigger(object):
 # Problems 2-5
 
 # TODO: WordTrigger
+class WordTrigger(Trigger):
+    def __init__(self, word):
+        self.word = word
+
+    def is_Word_in(self, string):
+        for item in string.punctuation:
+            if item in string:
+                string = string.replace(string.punctuation, "")
+
+
+
+
 
 # TODO: TitleTrigger
+class TitleTrigger(WordTrigger):
+    def evaluate(self, story):
+        Title = story.get_title(self)
+        self.is_Word_in(Title)
+        if word in story.title:
+            return True
+        else:
+            return False
+
 # TODO: SubjectTrigger
 # TODO: SummaryTrigger
 
@@ -112,7 +131,7 @@ def filter_stories(stories, triggerlist):
     a trigger in triggerlist fires.
     """
     # TODO: Problem 10
-    # This is a placeholder (we're just returning all the stories, with no filtering) 
+    # This is a placeholder (we're just returning all the stories, with no filtering)
     # Feel free to change this line!
     return stories
 
@@ -142,7 +161,7 @@ def readTriggerConfig(filename):
     # 'lines' has a list of lines you need to parse
     # Build a set of triggers from it and
     # return the appropriate ones
-    
+
 import thread
 
 def main_thread(p):
@@ -153,13 +172,13 @@ def main_thread(p):
     t3 = PhraseTrigger("Net Neutrality")
     t4 = OrTrigger(t2, t3)
     triggerlist = [t1, t4]
-    
+
     # TODO: Problem 11
-    # After implementing readTriggerConfig, uncomment this line 
+    # After implementing readTriggerConfig, uncomment this line
     #triggerlist = readTriggerConfig("triggers.txt")
 
     guidShown = []
-    
+
     while True:
         print "Polling..."
 
@@ -170,13 +189,13 @@ def main_thread(p):
 
         # Only select stories we're interested in
         stories = filter_stories(stories, triggerlist)
-    
+
         # Don't print a story if we have already printed it before
         newstories = []
         for story in stories:
             if story.get_guid() not in guidShown:
                 newstories.append(story)
-        
+
         for story in newstories:
             guidShown.append(story.get_guid())
             p.newWindow(story)
